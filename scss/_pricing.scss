@@ -1,0 +1,140 @@
+/* Blok cena / paketa (.pricing) */
+
+.pricing {
+	background: #fff;
+}
+
+/* Naslov sekcije paketa: veći od opšteg .section-heading */
+.pricing .section-heading {
+	font-size: clamp(1.5rem, 2.8vw, 2rem);
+}
+
+.packages-early-bird-notice {
+	display: flex;
+	align-items: center;
+	gap: 0.85rem;
+	width: 100%;
+	padding: 0.95rem 1.35rem 0.95rem 1.15rem;
+	background: #f7f2e9;
+	border-radius: 0.75rem;
+	box-shadow: 0 1px 0 rgba(61, 58, 51, 0.06);
+}
+
+.packages-early-bird-notice__icon {
+	display: flex;
+	flex-shrink: 0;
+	line-height: 0;
+}
+
+.packages-early-bird-notice__text {
+	flex: 1;
+	min-width: 0;
+	font-size: clamp(0.9rem, 1.5vw, 1rem);
+	font-weight: 500;
+	color: #7d735b;
+	line-height: 1.45;
+	text-align: left;
+}
+
+.pricing-card {
+	background: #fff;
+	border: $home-card-border;
+	border-radius: $home-card-radius;
+	box-shadow: $home-card-shadow;
+	transition: transform .2s ease, box-shadow .2s ease;
+	display: flex;
+	flex-direction: column;
+	padding: 2.5rem 2rem;
+	position: relative;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: $home-card-shadow-hover;
+	}
+}
+
+.pricing-card--featured {
+	border: 2px solid $primary;
+	box-shadow: $home-card-shadow;
+
+	&:hover {
+		box-shadow: $home-card-shadow-hover;
+	}
+}
+
+.pricing-card__badge {
+
+	padding: .3rem .75rem;
+	font-size: .7rem;
+	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: #fff;
+	background: $brand-blue;
+	border-radius: 9px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: -1rem;
+
+
+}
+
+.pricing-card__name {
+	font-size: 1.3rem;
+	font-weight: 700;
+	margin-bottom: 1rem;
+	line-height: 1.25;
+}
+
+.pricing-card__price-row {
+	margin-bottom: .25rem;
+}
+
+.pricing-card__price {
+	font-family: "Poppins", "Segoe UI", sans-serif;
+	font-size: clamp(1.75rem, 4vw, 2rem);
+	font-weight: 700;
+	color: $brand-blue;
+	line-height: 1.1;
+}
+
+.pricing-card__period {
+	font-size: .95rem;
+	font-weight: 600;
+	color: rgba($dark, .45);
+}
+
+.pricing-card__early {
+	font-size: .85rem;
+	font-weight: 600;
+	color: $warning;
+	margin-bottom: 1rem;
+}
+
+.pricing-card__features {
+	list-style: none;
+	margin: 1rem 0;
+	padding: 0;
+}
+
+.pricing-card__feature {
+	display: flex;
+	align-items: flex-start;
+	gap: .5rem;
+	font-size: .9rem;
+	line-height: 1.45;
+	color: rgba($dark, .82);
+	margin: .65rem 0;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.pricing-card__feature-icon {
+	flex-shrink: 0;
+	width: 18px;
+	height: 18px;
+	margin-top: .15rem;
+}

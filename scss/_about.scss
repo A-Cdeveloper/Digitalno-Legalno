@@ -1,0 +1,100 @@
+/* O nama — priča + osnivač */
+
+.about-how-we-work__grid {
+	align-items: stretch;
+}
+
+.about-how-card {
+	background: #fff;
+	border: 1px solid rgba($primary, 0.1);
+	border-radius: $home-card-radius;
+	padding: 1.25rem 1.35rem;
+	box-shadow: $home-card-shadow;
+	height: 100%;
+}
+
+.about-how-card__title {
+	font-size: clamp(1.05rem, 1.8vw, 1rem);
+	margin: 0 0 0.45rem;
+	line-height: 1.3;
+}
+
+.about-how-card__text {
+	font-size: 0.95rem;
+	line-height: 1.65;
+	color: rgba($dark, 0.82);
+}
+
+.about-founder__photo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1;
+	max-width: 280px;
+	margin-inline: auto;
+	background: #e8edf4;
+	border-radius: 0.5rem;
+	color: rgba($dark, 0.28);
+}
+
+.about-founder__photo-icon {
+	width: 42%;
+	height: auto;
+	max-width: 120px;
+}
+
+.about-founder__name {
+	font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+	font-weight: 700;
+	color: $brand-navy;
+	margin-bottom: 0.35rem;
+	line-height: 1.25;
+}
+
+.about-founder__role {
+	font-size: 1rem;
+	font-weight: 500;
+	color: $primary;
+	margin-bottom: 1rem;
+}
+
+.about-founder__bio {
+	font-size: 1rem;
+	line-height: 1.7;
+	color: rgba($dark, .88);
+	margin-bottom: 1.35rem;
+	max-width: 38rem;
+}
+
+.about-founder__tags {
+	gap: 0.5rem;
+}
+
+/* Ponovljiva oznaka — tagovi / badge outline */
+.badge-outline {
+	display: inline-block;
+	padding: 0.35rem 0.75rem;
+	font-size: 0.82rem;
+	font-weight: 500;
+	color: $primary;
+	border: 1px solid rgba($primary, 0.4);
+	border-radius: 999px;
+	background: #ffffff;
+	line-height: 1.3;
+}
+
+a.badge-outline {
+	text-decoration: none;
+	transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+
+	&:hover {
+		color: #fff;
+		background: $primary;
+		border-color: $primary;
+	}
+
+	&:focus-visible {
+		outline: 2px solid $primary;
+		outline-offset: 2px;
+	}
+}

@@ -1,0 +1,161 @@
+/* Stranica Paketi — tabela poređenja */
+
+
+.packages-compare .section-heading {
+	margin-bottom: 2rem;
+}
+
+.packages-compare__table-wrap {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	border: 1px solid rgba($dark, 0.1);
+	border-radius: $home-card-radius;
+	background: #fff;
+	box-shadow: $home-card-shadow;
+}
+
+.packages-compare__table {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 1.5;
+	font-size: .9rem;
+}
+
+.packages-compare__table thead th {
+	padding: .7rem 1.5rem;
+	text-align: center;
+
+
+	color: #ffffff;
+	background: $brand-blue;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+
+	&:first-child {
+		text-align: left;
+		border-radius: $home-card-radius 0 0 0;
+	}
+
+	&:last-child {
+		border-radius: 0 $home-card-radius 0 0;
+	}
+}
+
+.packages-compare__table tbody th,
+.packages-compare__table tbody td {
+	padding: 1rem 1.5rem;
+	vertical-align: middle;
+	border-bottom: 1px solid rgba($dark, 0.08);
+}
+
+.packages-compare__table tbody th {
+	text-align: left;
+	font-weight: 500;
+	color: rgba($dark, 0.95);
+}
+
+.packages-compare__table tbody td {
+	text-align: center;
+	color: rgba($dark, 0.72);
+}
+
+.packages-compare__table tbody tr:nth-child(even) th,
+.packages-compare__table tbody tr:nth-child(even) td {
+	background: rgba($dark, 0.035);
+}
+
+.packages-compare__table tbody tr:last-child th,
+.packages-compare__table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.packages-compare__cell--icon {
+	text-align: center !important;
+}
+
+.packages-compare__check,
+.packages-compare__no {
+	display: inline-block;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+}
+
+/* Jednokratne usluge — „Bez mesečne obaveze“ */
+.packages-oneoff .section-heading {
+	margin-bottom: 2rem;
+}
+
+.packages-oneoff__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+
+	@media (max-width: 991.98px) {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 575.98px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.packages-oneoff-card {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 100%;
+	padding: 1.5rem;
+	background: #fff;
+	border: $home-card-border;
+	border-radius: $home-card-radius;
+	box-shadow: $home-card-shadow;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: $home-card-shadow-hover;
+	}
+}
+
+.packages-oneoff-card__title {
+
+	font-size: 1rem;
+
+
+	line-height: 1.3;
+	margin: 0;
+	margin-bottom: 0.2rem;
+}
+
+.packages-oneoff-card__desc {
+
+	font-size: 0.8rem;
+	font-weight: 500;
+	line-height: 1.6;
+	color: rgba($dark, 0.62);
+	flex: 1 1 auto;
+	margin-bottom: 1.15rem !important;
+}
+
+.packages-oneoff-card__price {
+	margin-top: 1rem;
+	font-size: 1rem;
+	font-weight: 600;
+
+}
+
+.packages-oneoff-card__soon {
+	margin-top: auto;
+
+	font-size: .8rem;
+
+	color: rgba($primary, 0.55);
+	line-height: 1.3;
+}
+
+/* Opcioni WYSIWYG ispod sekcija */
+.packages-page-content {
+	max-width: 42rem;
+	margin-inline: auto;
+}

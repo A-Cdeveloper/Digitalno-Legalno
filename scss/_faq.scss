@@ -1,0 +1,84 @@
+/* FAQ — <details>/<summary> (pouzdano otvaranje/zatvaranje, nezavisne stavke) */
+.faq {
+	.section-heading {
+		margin-bottom: 2rem;
+	}
+}
+
+.faq__inner {
+	max-width: 44rem;
+}
+
+.faq__list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+}
+
+.faq__details {
+	border: 1px solid rgba($primary, 0.12);
+	border-radius: $home-card-radius;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba($dark, 0.05);
+	overflow: hidden;
+}
+
+.faq__summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1rem 1.15rem;
+	cursor: pointer;
+	list-style: none;
+	font-size: 0.98rem;
+	font-weight: 600;
+	line-height: 1.35;
+	user-select: none;
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&::after {
+		content: "";
+		flex-shrink: 0;
+		width: 0.55rem;
+		height: 0.55rem;
+		margin-top: -0.2em;
+		border-style: solid;
+		border-width: 0 2px 2px 0;
+		border-color: rgba($primary, 0.65);
+		transform: rotate(45deg);
+		transition: transform 0.2s ease;
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgba($primary, 0.45);
+		outline-offset: 2px;
+	}
+}
+
+.faq__details[open] .faq__summary::after {
+	transform: rotate(-135deg);
+	margin-top: 0.15em;
+}
+
+.faq__question {
+	flex: 1;
+	min-width: 0;
+}
+
+.faq__body {
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #6b7280;
+	padding: 0 1.15rem 1.15rem;
+	margin-top: -0.15rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.faq__summary::after {
+		transition: none;
+	}
+}

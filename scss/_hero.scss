@@ -1,0 +1,50 @@
+/* Hero — početna (home-hero) i unutrašnje stranice (page-hero) */
+
+.home-hero {
+	background: linear-gradient(rgba($brand-blue, .96), rgba($brand-navy, .56)),
+		url("images/home-hero.png") center/cover no-repeat;
+}
+
+.home-hero p {
+	color: rgba(white, 1);
+	margin-bottom: 2rem;
+	font-size: clamp(1rem, 1vw, 1.125rem);
+}
+
+.home-hero__eyebrow,
+.page-hero__eyebrow {
+	display: inline-block;
+	padding: .25rem 1rem !important;
+	border-radius: 1rem;
+	font-size: clamp(.7rem, 1vw, .8rem) !important;
+	text-transform: uppercase;
+	color: #ffffff !important;
+	width: auto !important;
+	background: rgba(#BFDBFE, 0.1);
+}
+
+.home-hero .subheading {
+	color: #BFDBFE;
+}
+
+.home-hero__btn {
+	padding: .6rem 2rem !important;
+}
+
+.page-hero {
+	background: linear-gradient(to right, rgba($brand-blue, 1), rgba($brand-navy, 1));
+}
+
+.page-hero__title {
+	font-family: "Poppins", "Segoe UI", sans-serif;
+	font-weight: 700;
+	color: #fff !important;
+	line-height: 1.15;
+}
+
+.page-hero__lead {
+	color: rgba(255, 255, 255, .78);
+	font-size: clamp(.95rem, 1.2vw, 1.1rem);
+	line-height: 1.55;
+	max-width: 40rem;
+}
