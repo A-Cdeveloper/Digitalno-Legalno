@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Digitalno Legalno",
   "scripts": {
-    "watch:sass": "sass --watch --quiet-deps -I node_modules scss:./",
-    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' bootstrap.css -o bootstrap.min.css",
+    "watch:css": "sass --watch --quiet-deps scss/style.scss:style.min.css --style compressed",
+    "watch:bootstrap": "sass --watch --quiet-deps --load-path=node_modules scss/bootstrap.scss:bootstrap.min.css --style compressed",
+    "watch": "npm-run-all --parallel watch:css watch:bootstrap",
+    "watch:sass": "npm run watch",
     "build:css": "sass --quiet-deps scss/style.scss:style.min.css --style compressed",
-    "build:bootstrap": "sass --load-path=node_modules --quiet-deps scss/bootstrap.scss:bootstrap.min.css --style compressed"
+    "build:bootstrap": "sass --load-path=node_modules --quiet-deps scss/bootstrap.scss:bootstrap.min.css --style compressed",
+    "build": "npm-run-all build:css build:bootstrap"
   },
   "author": "E-SEO TEAM",
   "license": "ISC",

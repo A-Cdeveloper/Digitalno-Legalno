@@ -30,4 +30,6 @@ $display = function_exists( 'digitalno_legalno_post_display_category' ) ? digita
 	<div class="single-post__content entry-content">
 		<?php the_content(); ?>
 	</div>
+
+	<?php get_template_part( 'global-templates/post', 'share' ); ?>
 </article>

@@ -40,11 +40,37 @@ add_action( 'after_setup_theme', 'theme_setup' );
  */
 function enqueue_theme_assets() {
 	wp_enqueue_style( 'digitalno-legalno-bootstrap', get_template_directory_uri() . '/bootstrap.min.css', array(), _S_VERSION );
-	wp_enqueue_style( 'digitalno-legalno-style', get_stylesheet_directory_uri() . '/style.css', array( 'digitalno-legalno-bootstrap' ), _S_VERSION );
+	wp_enqueue_style( 'digitalno-legalno-style', get_stylesheet_directory_uri() . '/style.min.css', array( 'digitalno-legalno-bootstrap' ), _S_VERSION );
 	wp_enqueue_script( 'bootstrap-bundle', get_template_directory_uri() . '/js/bootstrap.bundle.min.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'digitalno-legalno-base', get_template_directory_uri() . '/js/base.js', array( 'bootstrap-bundle' ), _S_VERSION, true );
+
+	// Hint browseru da deferuje skripte i rastereti rendering.
+	if ( function_exists( 'wp_script_add_data' ) ) {
+		wp_script_add_data( 'bootstrap-bundle', 'strategy', 'defer' );
+		wp_script_add_data( 'digitalno-legalno-base', 'strategy', 'defer' );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_theme_assets' );
+
+/**
+ * Preload glavne hero slike na početnoj zbog bržeg LCP otkrivanja.
+ *
+ * @return void
+ */
+function digitalno_legalno_preload_home_hero_image() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$hero_image_uri = get_theme_file_uri( 'images/home-hero.jpg' );
+	if ( ! $hero_image_uri ) {
+		return;
+	}
+	?>
+<link rel="preload" as="image" href="<?php echo esc_url( $hero_image_uri ); ?>" fetchpriority="high">
+<?php
+}
+add_action( 'wp_head', 'digitalno_legalno_preload_home_hero_image', 1 );
 
 /**
  * Slug roditeljske kategorije za blog (pill filteri; „Svi“ = ta arhiva).
@@ -124,8 +150,96 @@ function digitalno_legalno_post_display_category() {
 		}
 	}
 
+	foreach ( $cats as $c ) {
+		if ( 'uncategorized' === $c->slug ) {
+			continue;
+		}
+		if ( 'category' !== $c->taxonomy ) {
+			continue;
+		}
+		if ( ! empty( $c->name ) ) {
+			return $c;
+		}
+	}
+
 	return $cats[0];
 }
+
+/**
+ * Skrivanje podrazumevane kategorije u admin izboru kategorija (metabox/checklist).
+ *
+ * @param array $args Argumenti za wp_terms_checklist().
+ * @return array
+ */
+function digitalno_legalno_hide_default_category_in_admin_checklist( $args ) {
+	if ( ! is_admin() ) {
+		return $args;
+	}
+
+	$taxonomy = isset( $args['taxonomy'] ) ? (string) $args['taxonomy'] : 'category';
+	if ( 'category' !== $taxonomy ) {
+		return $args;
+	}
+
+	$default_category_id = (int) get_option( 'default_category' );
+	if ( $default_category_id <= 0 ) {
+		return $args;
+	}
+
+	$exclude = isset( $args['exclude'] ) ? $args['exclude'] : array();
+	if ( is_string( $exclude ) ) {
+		$exclude = array_filter( array_map( 'trim', explode( ',', $exclude ) ) );
+	} elseif ( ! is_array( $exclude ) ) {
+		$exclude = array();
+	}
+
+	$exclude   = array_map( 'intval', $exclude );
+	$exclude[] = $default_category_id;
+	$exclude   = array_unique( $exclude );
+
+	$args['exclude'] = implode( ',', $exclude );
+
+	return $args;
+}
+add_filter( 'wp_terms_checklist_args', 'digitalno_legalno_hide_default_category_in_admin_checklist' );
+
+/**
+ * Skrivanje podrazumevane kategorije i iz admin term listi/dropdown-a.
+ *
+ * @param array $args       Argumenti za get_terms().
+ * @param array $taxonomies Takse koje se učitavaju.
+ * @return array
+ */
+function digitalno_legalno_hide_default_category_in_admin_terms( $args, $taxonomies ) {
+	if ( ! is_admin() ) {
+		return $args;
+	}
+
+	if ( empty( $taxonomies ) || ! in_array( 'category', (array) $taxonomies, true ) ) {
+		return $args;
+	}
+
+	$default_category_id = (int) get_option( 'default_category' );
+	if ( $default_category_id <= 0 ) {
+		return $args;
+	}
+
+	$exclude = isset( $args['exclude'] ) ? $args['exclude'] : array();
+	if ( is_string( $exclude ) ) {
+		$exclude = array_filter( array_map( 'trim', explode( ',', $exclude ) ) );
+	} elseif ( ! is_array( $exclude ) ) {
+		$exclude = array();
+	}
+
+	$exclude   = array_map( 'intval', $exclude );
+	$exclude[] = $default_category_id;
+	$exclude   = array_unique( $exclude );
+
+	$args['exclude'] = implode( ',', $exclude );
+
+	return $args;
+}
+add_filter( 'get_terms_args', 'digitalno_legalno_hide_default_category_in_admin_terms', 10, 2 );
 
 /**
  * Na arhivi roditelja bloga uključuje objave iz svih podkategorija.
