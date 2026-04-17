@@ -89,6 +89,9 @@ $help_icons    = array( $icon_svc_legal, $icon_svc_docs, $icon_svc_finance );
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
+
+        <?php get_template_part( 'global-templates/extra-services' ); ?>
+
         <p class="text-center mt-4 mt-lg-5 mb-0">
             <a class="btn btn-outline-primary" href="<?php echo esc_url( home_url( '/usluge' ) ); ?>">
                 <?php esc_html_e( 'Saznaj više o uslugama', 'digitalno-legalno' ); ?>

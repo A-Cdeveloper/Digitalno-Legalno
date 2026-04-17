@@ -69,7 +69,7 @@ $bio = get_field('bio', 'options');
                         <?php echo esc_html($titula); ?>
                     </p>
                     <p class="about-founder__bio">
-                        <?php echo esc_html($bio); ?>
+                        <?php echo $bio; ?>
                     </p>
                     <?php if ( ! empty( $bio_categories ) ) : ?>
                     <ul class="about-founder__tags list-unstyled d-flex flex-wrap gap-2 mb-0" role="list">

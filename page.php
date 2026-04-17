@@ -2,7 +2,7 @@
 /**
  * Podrazumevani šablon stranice (sadržaj iz editora).
  *
- * Template Name: Page
+ * Bez "Template Name" — ovo je fallback `page.php`; u editoru ostaje "Podrazumevani šablon".
  *
  * @package digitalno-legalno
  */

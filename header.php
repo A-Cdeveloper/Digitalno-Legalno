@@ -22,7 +22,7 @@
 
     <a class="skip-link" href="#main-content"><?php esc_html_e( 'Preskoči na sadržaj', 'digitalno-legalno' ); ?></a>
 
-    <header class="site-header sticky-top py-3">
+    <header class="site-header sticky-top py-2_5">
         <div
             class="container d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
             <?php get_template_part( 'global-templates/logo' ); ?>

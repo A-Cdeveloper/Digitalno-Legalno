@@ -86,30 +86,32 @@ if ( $image_first ) {
 }
 ?>
 <section class="<?php echo esc_attr( $section_cls ); ?>" aria-labelledby="<?php echo esc_attr( $heading_id ); ?>">
-	<div class="container">
-		<div class="<?php echo esc_attr( $row_class ); ?>">
-			<div class="col-30 col-lg-17">
-				<div class="services-block__content">
-					<div class="services-block__header">
-						<span class="services-block__heading-icon-wrap" aria-hidden="true">
-							<img src="<?php echo esc_url( $heading_icon ); ?>" alt="" width="32" height="32" class="services-block__heading-icon-img" loading="<?php echo esc_attr( $loading ); ?>" decoding="async">
-						</span>
-						<div class="services-block__header-text">
-							<h2 id="<?php echo esc_attr( $heading_id ); ?>" class="services-block__title">
-								<?php echo esc_html( $title ); ?>
-							</h2>
-							<?php if ( '' !== $subtitle ) : ?>
-							<p class="services-block__subtitle"><?php echo esc_html( $subtitle ); ?></p>
-							<?php endif; ?>
-						</div>
-					</div>
-					<?php if ( '' !== $lead ) : ?>
-					<p class="services-block__lead"><?php echo esc_html( $lead ); ?></p>
-					<?php endif; ?>
-					<?php if ( ! empty( $cards ) ) : ?>
-					<div class="services-block__grid">
-						<?php foreach ( $cards as $card_index => $card ) : ?>
-						<?php
+    <div class="container justify-content-between">
+        <div class="<?php echo esc_attr( $row_class ); ?>">
+            <div class="col-30 col-lg-17">
+                <div class="services-block__content">
+                    <div class="services-block__header">
+                        <span class="services-block__heading-icon-wrap" aria-hidden="true">
+                            <img src="<?php echo esc_url( $heading_icon ); ?>" alt="" width="32" height="32"
+                                class="services-block__heading-icon-img" loading="<?php echo esc_attr( $loading ); ?>"
+                                decoding="async">
+                        </span>
+                        <div class="services-block__header-text">
+                            <h2 id="<?php echo esc_attr( $heading_id ); ?>" class="services-block__title">
+                                <?php echo esc_html( $title ); ?>
+                            </h2>
+                            <?php if ( '' !== $subtitle ) : ?>
+                            <p class="services-block__subtitle"><?php echo esc_html( $subtitle ); ?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php if ( '' !== $lead ) : ?>
+                    <p class="services-block__lead"><?php echo esc_html( $lead ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( ! empty( $cards ) ) : ?>
+                    <div class="services-block__grid">
+                        <?php foreach ( $cards as $card_index => $card ) : ?>
+                        <?php
 						$card_title = isset( $card['element'] ) ? (string) $card['element'] : '';
 						$card_text  = isset( $card['element_opis'] ) ? (string) $card['element_opis'] : '';
 						$card_icon  = isset( $service_element_icons[ $index ][ $card_index ] ) ? $service_element_icons[ $index ][ $card_index ] : $default_element_icon;
@@ -117,37 +119,40 @@ if ( $image_first ) {
 							continue;
 						}
 						?>
-						<div class="services-detail-card">
-							<div class="services-detail-card__icon-wrap" aria-hidden="true">
-								<img src="<?php echo esc_url( $card_icon ); ?>" alt="" width="24" height="24" class="services-detail-card__icon" loading="lazy" decoding="async">
-							</div>
-							<div class="services-detail-card__body">
-								<?php if ( '' !== $card_title ) : ?>
-								<h3 class="services-detail-card__title"><?php echo esc_html( $card_title ); ?></h3>
-								<?php endif; ?>
-								<?php if ( '' !== $card_text ) : ?>
-								<p class="services-detail-card__text mb-0"><?php echo esc_html( $card_text ); ?></p>
-								<?php endif; ?>
-							</div>
-						</div>
-						<?php endforeach; ?>
-					</div>
-					<?php endif; ?>
-					<?php if ( '' !== $footnote ) : ?>
-					<p class="services-block__footnote mb-0"><?php echo esc_html( $footnote ); ?></p>
-					<?php endif; ?>
-				</div>
-			</div>
-			<div class="col-30 col-lg-12">
-				<?php if ( ! empty( $image_url ) ) : ?>
-				<figure class="services-block__figure mb-0">
-					<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>" class="services-block__img" width="800" height="600" loading="<?php echo esc_attr( $loading ); ?>" decoding="async">
-				</figure>
-				<?php else : ?>
-				<div class="services-block__figure services-block__figure--empty mb-0" aria-hidden="true"></div>
-				<?php endif; ?>
-			</div>
-		</div>
-	</div>
+                        <div class="services-detail-card">
+                            <div class="services-detail-card__icon-wrap" aria-hidden="true">
+                                <img src="<?php echo esc_url( $card_icon ); ?>" alt="" width="24" height="24"
+                                    class="services-detail-card__icon" loading="lazy" decoding="async">
+                            </div>
+                            <div class="services-detail-card__body">
+                                <?php if ( '' !== $card_title ) : ?>
+                                <h3 class="services-detail-card__title"><?php echo esc_html( $card_title ); ?></h3>
+                                <?php endif; ?>
+                                <?php if ( '' !== $card_text ) : ?>
+                                <p class="services-detail-card__text mb-0"><?php echo esc_html( $card_text ); ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+                    <?php if ( '' !== $footnote ) : ?>
+                    <p class="services-block__footnote mb-0"><?php echo esc_html( $footnote ); ?></p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="col-30 col-lg-12">
+                <?php if ( ! empty( $image_url ) ) : ?>
+                <figure class="services-block__figure mb-0">
+                    <img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>"
+                        class="services-block__img" width="800" height="600"
+                        loading="<?php echo esc_attr( $loading ); ?>" decoding="async">
+                </figure>
+                <?php else : ?>
+                <div class="services-block__figure services-block__figure--empty mb-0" aria-hidden="true"></div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 </section>
 <?php endforeach; ?>

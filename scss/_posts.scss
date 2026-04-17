@@ -220,6 +220,22 @@
 	overflow-wrap: anywhere;
 }
 
+.single-post__thumb {
+	margin: 0;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+}
+
+.single-post__thumb-img {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
+	border-radius: .5rem;
+	object-fit: cover;
+}
+
 .single-post__title {
 
 	font-size: clamp(1.35rem, 3.5vw, 2rem);

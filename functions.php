@@ -34,13 +34,129 @@ function theme_setup() {
 add_action( 'after_setup_theme', 'theme_setup' );
 
 /**
+ * Bez istaknute slike za stranice (ostaje uključeno za objave i druge tipove koji je koriste).
+ *
+ * @return void
+ */
+function digitalno_legalno_remove_page_thumbnail_support() {
+	remove_post_type_support( 'page', 'thumbnail' );
+}
+add_action( 'init', 'digitalno_legalno_remove_page_thumbnail_support', 11 );
+
+/**
+ * U adminu ponovo uključuje editor i atribute stranice (šablon, roditelj, redosled).
+ *
+ * Neki plugini pozivaju remove_post_type_support() za `page` i time nestane izbor šablona u Gutenbergu.
+ *
+ * @return void
+ */
+function digitalno_legalno_ensure_page_admin_supports() {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	add_post_type_support( 'page', 'editor' );
+	add_post_type_support( 'page', 'page-attributes' );
+}
+add_action( 'init', 'digitalno_legalno_ensure_page_admin_supports', 999 );
+add_action( 'admin_init', 'digitalno_legalno_ensure_page_admin_supports', 999 );
+
+/**
+ * Dopunjava listu page šablona ako sken teme iz nekog razloga ne vrati sve fajlove.
+ *
+ * @param string[]     $post_templates Ključ = ime fajla u korenu teme.
+ * @param WP_Theme     $theme          Objekat aktivne teme.
+ * @param WP_Post|null $post           Stranica u editoru (može biti null).
+ * @param string       $post_type      Tip zapisa.
+ * @return string[]
+ */
+function digitalno_legalno_merge_page_templates( $post_templates, $theme, $post, $post_type ) {
+	if ( 'page' !== $post_type ) {
+		return $post_templates;
+	}
+
+	$dir      = trailingslashit( get_template_directory() );
+	$defaults = array(
+		'front-page.php'    => __( 'Front Page', 'digitalno-legalno' ),
+		'page-contact.php'  => __( 'Contact', 'digitalno-legalno' ),
+		'page-services.php' => __( 'Services', 'digitalno-legalno' ),
+		'page-about.php'    => __( 'About us', 'digitalno-legalno' ),
+		'page-paketi.php'   => __( 'Packages', 'digitalno-legalno' ),
+	);
+
+	foreach ( $defaults as $file => $label ) {
+		if ( ! isset( $post_templates[ $file ] ) && is_readable( $dir . $file ) ) {
+			$post_templates[ $file ] = $label;
+		}
+	}
+
+	return $post_templates;
+}
+add_filter( 'theme_page_templates', 'digitalno_legalno_merge_page_templates', 10000, 4 );
+
+/**
+ * Da li stranica koristi podrazumevani sadržajni šablon (sadržaj iz baze / page.php).
+ *
+ * Starije instalacije mogu imati meta šablon `page.php`.
+ *
+ * @param int $post_id ID stranice.
+ * @return bool
+ */
+function digitalno_legalno_page_uses_default_content_template( $post_id ) {
+	$template = get_page_template_slug( $post_id );
+
+	if ( false === $template || '' === $template || 'default' === $template ) {
+		return true;
+	}
+
+	if ( 'page.php' === $template ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Isključuje polje sadržaja (editor) za stranice koje koriste prilagođeni PHP šablon.
+ *
+ * Šablon stranice i dalje može da se menja (page-attributes); sadržaj je u `loop-templates/` / partialima.
+ *
+ * @return void
+ */
+function digitalno_legalno_page_editor_visibility_by_template() {
+	global $pagenow;
+
+	if ( 'post.php' !== $pagenow ) {
+		return;
+	}
+
+	$post_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+	if ( ! $post_id ) {
+		return;
+	}
+
+	$post = get_post( $post_id );
+	if ( ! $post || 'page' !== $post->post_type ) {
+		return;
+	}
+
+	if ( digitalno_legalno_page_uses_default_content_template( $post_id ) ) {
+		return;
+	}
+
+	remove_post_type_support( 'page', 'editor' );
+}
+add_action( 'load-post.php', 'digitalno_legalno_page_editor_visibility_by_template' );
+
+/**
  * Registracija stilova i skripti.
  *
  * @return void
  */
 function enqueue_theme_assets() {
 	wp_enqueue_style( 'digitalno-legalno-bootstrap', get_template_directory_uri() . '/bootstrap.min.css', array(), _S_VERSION );
-	wp_enqueue_style( 'digitalno-legalno-style', get_stylesheet_directory_uri() . '/style.min.css', array( 'digitalno-legalno-bootstrap' ), _S_VERSION );
+	wp_enqueue_style( 'digitalno-legalno-style', get_stylesheet_directory_uri() . '/style.css', array( 'digitalno-legalno-bootstrap' ), _S_VERSION );
 	wp_enqueue_script( 'bootstrap-bundle', get_template_directory_uri() . '/js/bootstrap.bundle.min.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'digitalno-legalno-base', get_template_directory_uri() . '/js/base.js', array( 'bootstrap-bundle' ), _S_VERSION, true );
 
@@ -331,60 +447,6 @@ function digitalno_legalno_bs5_dropdown_data_attribute( $atts, $item, $args ) {
 	return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'digitalno_legalno_bs5_dropdown_data_attribute', 20, 3 );
-
-/**
- * Da li stranica koristi podrazumevani sadržajni šablon (page.php / „Page”).
- *
- * Napomena: u page.php je Template Name Page, pa WP često čuva meta kao "page.php", ne "default".
- *
- * @param int $post_id ID stranice.
- * @return bool
- */
-function digitalno_legalno_page_uses_default_content_template( $post_id ) {
-	$template = get_page_template_slug( $post_id );
-
-	if ( false === $template || '' === $template || 'default' === $template ) {
-		return true;
-	}
-
-	// Izabrano „Page” u atributima stranice = isti fajl kao podrazumevani page.php.
-	if ( 'page.php' === $template ) {
-		return true;
-	}
-
-	return false;
-}
-
-/**
- * Uključuje klasični editor samo za stranice sa podrazumevanim šablonom (sadržaj u bazi).
- *
- * @return void
- */
-function digitalno_legalno_page_editor_visibility_by_template() {
-	global $pagenow;
-
-	if ( 'post.php' !== $pagenow ) {
-		return;
-	}
-
-	$post_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-	if ( ! $post_id ) {
-		return;
-	}
-
-	$post = get_post( $post_id );
-	if ( ! $post || 'page' !== $post->post_type ) {
-		return;
-	}
-
-	if ( digitalno_legalno_page_uses_default_content_template( $post_id ) ) {
-		return;
-	}
-
-	remove_post_type_support( 'page', 'editor' );
-}
-add_action( 'load-post.php', 'digitalno_legalno_page_editor_visibility_by_template' );
 
 /**
  * Contact Form 7 — putanja do ajax loader GIF-a.

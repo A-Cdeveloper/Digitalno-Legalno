@@ -97,7 +97,6 @@ The theme enqueues **`style.css`** and **`bootstrap.min.css`** from the theme ro
 ## Customization
 
 - **Blog parent category** — default slug is `compliance-resursi`. Override via the filter `digitalno_legalno_blog_category_slug`.
-- **Editor on pages** — the classic editor remains available only for the default page template (`page.php` / “Page”); custom templates rely on PHP partials (see `digitalno_legalno_page_uses_default_content_template` in `functions.php`).
 
 ---
 

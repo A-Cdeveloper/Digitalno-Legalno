@@ -1,7 +1,5 @@
 <?php
 /**
- * Šablon početne stranice.
- *
  * Template Name: Front Page
  *
  * @package digitalno-legalno
@@ -12,8 +10,8 @@ get_header();
 
 <main id="main-content" <?php post_class( [ 'container-fluid' ] ); ?>>
 
-	<?php if ( have_posts() ) : ?>
-		<?php
+    <?php if ( have_posts() ) : ?>
+    <?php
 		while ( have_posts() ) :
 			the_post();
 			get_template_part( 'loop-templates/content', 'home' );

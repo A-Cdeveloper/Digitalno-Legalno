@@ -128,13 +128,13 @@ blockquote p {
 
 	img {
 		width: auto;
-		height: 35px;
+		height: 50px;
 		object-fit: contain;
-		border-radius: .5rem;
 	}
 
 	.logo__title {
 		font-size: clamp(1rem, 1vw, 1.3rem);
+		font-family: "Poppins", "Segoe UI", sans-serif;
 
 		@media (max-width: 768px) {
 			font-size: 1.3rem;
