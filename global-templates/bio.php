@@ -7,39 +7,16 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$bio_categories = array();
-
-$blog_cat = get_term_by( 'slug', digitalno_legalno_blog_category_slug(), 'category' );
-if ( $blog_cat && ! is_wp_error( $blog_cat ) ) {
-	$terms = get_terms(
-		array(
-			'taxonomy'   => 'category',
-			'parent'     => (int) $blog_cat->term_id,
-			'hide_empty' => true,
-			'orderby'    => 'name',
-			'order'      => 'ASC',
-		)
-	);
-	if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
-		$bio_categories = $terms;
-	}
-}
-
-if ( empty( $bio_categories ) ) {
-	$uncat = get_term_by( 'slug', 'uncategorized', 'category' );
-	$exclude = ( $uncat && ! is_wp_error( $uncat ) ) ? array( (int) $uncat->term_id ) : array();
-	$fallback = get_terms(
-		array(
-			'taxonomy'   => 'category',
-			'hide_empty' => true,
-			'orderby'    => 'name',
-			'order'      => 'ASC',
-			'exclude'    => $exclude,
-		)
-	);
-	if ( ! is_wp_error( $fallback ) ) {
-		$bio_categories = $fallback;
-	}
+$bio_tags = get_terms(
+	array(
+		'taxonomy'   => 'post_tag',
+		'hide_empty' => true,
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+	)
+);
+if ( is_wp_error( $bio_tags ) ) {
+	$bio_tags = array();
 }
 
 $image = get_field('image', 'options');
@@ -71,18 +48,18 @@ $bio = get_field('bio', 'options');
                     <p class="about-founder__bio">
                         <?php echo $bio; ?>
                     </p>
-                    <?php if ( ! empty( $bio_categories ) ) : ?>
-                    <ul class="about-founder__tags list-unstyled d-flex flex-wrap gap-2 mb-0" role="list">
-                        <?php foreach ( $bio_categories as $term ) : ?>
+                    <?php if ( ! empty( $bio_tags ) ) : ?>
+                    <ul class="about-founder__tags list-unstyled d-flex flex-wrap gap-2 mb-0 w-100 w-lg-75" role="list">
+                        <?php foreach ( $bio_tags as $term ) : ?>
                         <?php
-							$cat_link = get_term_link( $term );
-							if ( is_wp_error( $cat_link ) ) {
+							$tag_link = get_term_link( $term );
+							if ( is_wp_error( $tag_link ) ) {
 								continue;
 							}
 							?>
                         <li>
                             <a class="badge-outline"
-                                href="<?php echo esc_url( $cat_link ); ?>"><?php echo esc_html( $term->name ); ?></a>
+                                href="<?php echo esc_url( $tag_link ); ?>"><?php echo esc_html( $term->name ); ?></a>
                         </li>
                         <?php endforeach; ?>
                     </ul>

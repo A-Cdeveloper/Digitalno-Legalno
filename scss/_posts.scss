@@ -139,8 +139,21 @@
 }
 
 .blog-card__meta {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: .2rem .4rem;
 	font-size: .7rem;
 	color: rgba($dark, .45);
+}
+
+.blog-card__meta-sep {
+	opacity: .65;
+}
+
+.blog-card__meta-category {
+	font-weight: 500;
+	color: rgba($dark, .62);
 }
 
 /* --- Paginacija --- */
@@ -317,6 +330,12 @@
 		font-size: 1.1rem;
 		margin-bottom: .1rem;
 	}
+}
+
+.single-post__tags {
+	margin-top: 2rem;
+	padding-top: 2rem;
+	border-top: 1px solid rgba($dark, .12);
 }
 
 .single-post__share {

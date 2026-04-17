@@ -68,17 +68,25 @@
 
 .about-founder__tags {
 	gap: 0.5rem;
+
+}
+
+/* Custom responsive width utility used in bio tags list */
+.w-lg-75 {
+	@media (min-width: 768px) {
+		width: 75% !important;
+	}
 }
 
 /* Ponovljiva oznaka — tagovi / badge outline */
 .badge-outline {
 	display: inline-block;
-	padding: 0.35rem 0.75rem;
+	padding: 0.35rem 0.45rem;
 	font-size: 0.82rem;
 	font-weight: 500;
 	color: $primary;
 	border: 1px solid rgba($primary, 0.4);
-	border-radius: 999px;
+
 	background: #ffffff;
 	line-height: 1.3;
 }

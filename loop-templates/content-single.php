@@ -47,5 +47,6 @@ $display = function_exists( 'digitalno_legalno_post_display_category' ) ? digita
         <?php the_content(); ?>
     </div>
 
+    <?php get_template_part( 'global-templates/post', 'tags' ); ?>
     <?php get_template_part( 'global-templates/post', 'share' ); ?>
 </article>
